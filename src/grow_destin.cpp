@@ -20,8 +20,9 @@ const int TRAINING_STATE_3=3;
 const int TRAINING_STATE_4=4;
 const int TESTING_STATE_ON=1;
 const int TESTING_STATE_OFF=2;
-const double DESTIN_DISTANCE=35;
+const double DESTIN_DISTANCE=35.0;
 const string DESTIN_ORIGIN="../result/destin_origin.des";
+const string SAVED_DESTIN_FEATURES="../result/saved_features/saved_destin_features.txt";
 
 // Variables
 
@@ -30,7 +31,7 @@ int testing_counter;
 int noDestin;
 int training_state;
 int testing_state;
-string selected_destin_name;
+int selected_destin;
 vector<cv::Mat> saved_frame;
 ifstream fin;
 ofstream fout;
@@ -97,7 +98,7 @@ void growDestinCallBack(const sensor_msgs::ImageConstPtr& msg)
       network->doDestin(float_image);
     }
 
-    featureExtractor->writeBeliefToMat("../result/saved_features/saved_destin_features.txt");
+    featureExtractor->writeBeliefToMat(SAVED_DESTIN_FEATURES);
 
     cout << "[MESSAGE] Feature of DeSTIN network " << noDestin << " is extracted" << endl;
     // clear DeSTIN
@@ -106,26 +107,46 @@ void growDestinCallBack(const sensor_msgs::ImageConstPtr& msg)
     noDestin++;
     testing_state=TESTING_STATE_ON;
   }
-  else if (testing_counter==TESTING_FRAME_COUNT && testing_state==TESTING_STATE_ON)
+  else if (testing_counter<TESTING_FRAME_COUNT && testing_state==TESTING_STATE_ON)
   {
-    testing_counter=0;
-
     float * float_image=callImage(frame, IMAGE_SIZE);
     network->doDestin(float_image);
 
-    testing_state=TESTING_STATE_OFF;
-
+    testing_counter++;
+    if (testing_counter==TESTING_FRAME_COUNT)
+    {
+      testing_state=TESTING_STATE_OFF;
+      training_state=TRAINING_STATE_1;
+    }
   }
   else if (counter < FRAME_COUNT && testing_state==TESTING_STATE_OFF)
   {
-    saved_frame.push_back(frame);
 
     switch (training_state)
     {
       case TRAINING_STATE_1: // search for existing DeSTIN network
       {
-        selected_destin_name=findMostSimilarDeSTINNetwork();
-        int distance=calculateDistance();
+        BeliefExporter * featureExtractor=new BeliefExporter(*network, 5);
+        testing_counter=0;
+        float * testing_feature=featureExtractor->getBeliefs();
+        fin.open(SAVED_DESTIN_FEATURES.c_str());
+
+        vector<float *> saved_feature;
+        for (int i=0;i<noDestin;i++)
+        {
+          int outputSize=featureExtractor->outputSize;
+          float * temp=new float[outputSize];
+
+          for (int j=0;j<outputSize;j++)
+            fin >> temp[j];
+
+          saved_feature.push_back(temp);
+        }
+
+        fin.close();
+
+        selected_destin=findMostSimilarDeSTINNetwork(noDestin, featureExtractor->outputSize, saved_feature, testing_feature);
+        double distance=calculateDistance(featureExtractor->outputSize, saved_feature[selected_destin], testing_feature);
 
         if (distance>=DESTIN_DISTANCE)
         {
@@ -149,6 +170,12 @@ void growDestinCallBack(const sensor_msgs::ImageConstPtr& msg)
       case TRAINING_STATE_3: // if need to feedback from old DeSTIN
       {
         network=new DestinNetworkAlt(siw, nLayers, centroid_counts, isUniform);
+        string selected_destin_name="";
+
+        stringstream ss;
+        ss << "../result/destin_network/destin_" << selected_destin;
+        ss >> selected_destin_name;
+
         network->load(selected_destin_name.c_str());
 
         training_state=TRAINING_STATE_4;
@@ -156,10 +183,13 @@ void growDestinCallBack(const sensor_msgs::ImageConstPtr& msg)
       }
       case TRAINING_STATE_4:
       {
+        saved_frame.push_back(frame);
+
         float * float_image=callImage(frame, IMAGE_SIZE);
 
         network->doDestin(float_image);
 
+        counter++;
         break;
       }
       default:
@@ -168,7 +198,6 @@ void growDestinCallBack(const sensor_msgs::ImageConstPtr& msg)
       }
     }
 
-    counter++;
   }
 
   imshow("Grow DeSTIN", frame);

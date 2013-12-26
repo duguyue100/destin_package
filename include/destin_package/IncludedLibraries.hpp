@@ -42,6 +42,7 @@
 #include <sstream>
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 
 // NAMING SPACE
 using namespace std;

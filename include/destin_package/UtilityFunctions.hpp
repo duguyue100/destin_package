@@ -10,6 +10,18 @@
 
 #include "destin_package/IncludedLibraries.hpp"
 
+double calculateDistance(int featureDimension, float * selected_destin, float * testing_feature)
+{
+  double distance=0;
+
+  for (int i=0;i<featureDimension;i++)
+    distance+=(selected_destin-testing_feature)*(selected_destin-testing_feature);
+
+  distance=sqrt(distance);
+
+  return distance;
+}
+
 float * callImage(cv::Mat& image, int IMAGE_SIZE)
 {
   float * float_image = new float[IMAGE_SIZE * IMAGE_SIZE];
@@ -43,6 +55,24 @@ void convert(cv::Mat& in, float * out)
       i++;
     }
   }
+}
+
+int findMostSimilarDeSTINNetwork(int noDestin, int featureDimension, vector<float *> saved_feature, float * testing_feature)
+{
+  int result=-1;
+  double distance=99999999;
+  for (int i=0;i<noDestin;i++)
+  {
+    double d=calculateDistance(featureDimension, saved_feature[i], testing_feature);
+
+    if (d<distance)
+    {
+      distance=d;
+      result=i;
+    }
+  }
+
+  return result;
 }
 
 cv::Mat processImage(cv::Mat buffer, int image_size)
