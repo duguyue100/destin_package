@@ -22,8 +22,8 @@ Current Nodes:
 
 + Create a set of utility functions [DONE, STILL IMPROVING]
 + Growing DeSTIN network [FIRST VERSION COMPLETED, HAVEN'T TESTED]
-+ Add condition to deal with initial situation
-+ Add condition to deal with when the selected DeSTIN network is updated (now everytime will create new DeSTIN network)
++ Add condition to deal with initial situation [DONE, HAVEN'T TESTED]
++ Add condition to deal with when the selected DeSTIN network is updated (now everytime will create new DeSTIN network) [DONE, HAVEN'T TESTED]
 + Add a pause
 + Testing Growing DeSTIN network with slow moving speed
 + Memory monitoring

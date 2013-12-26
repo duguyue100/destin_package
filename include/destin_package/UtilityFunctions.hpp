@@ -22,17 +22,6 @@ double calculateDistance(int featureDimension, float * selected_destin, float * 
   return distance;
 }
 
-float * callImage(cv::Mat& image, int IMAGE_SIZE)
-{
-  float * float_image = new float[IMAGE_SIZE * IMAGE_SIZE];
-
-  convert(image, float_image);
-
-  testNan(float_image, IMAGE_SIZE * IMAGE_SIZE);
-
-  return float_image;
-}
-
 void convert(cv::Mat& in, float * out)
 {
   if (in.channels() != 1)
@@ -102,6 +91,17 @@ void testNan(float * array, int len)
       exit(1);
     }
   }
+}
+
+float * callImage(cv::Mat& image, int IMAGE_SIZE)
+{
+  float * float_image = new float[IMAGE_SIZE * IMAGE_SIZE];
+
+  convert(image, float_image);
+
+  testNan(float_image, IMAGE_SIZE * IMAGE_SIZE);
+
+  return float_image;
 }
 
 #endif /* UTILITYFUNCTIONS_HPP_ */
