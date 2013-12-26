@@ -27,13 +27,10 @@ Current Nodes:
 ## Notes
 
 + You need to change the linking libraries part in the CMakeLists.txt, the format is as following
-```cmake
+```
 include_directories(/home/your_hostname/destin/Destin/Common)
-
 include_directories(/home/your_hostname/destin/Destin/DavisDestin/include)
-
 target_link_libraries(grow_destin /home/your_hostname/destin/Destin/Common/libcommon.so)
-
 target_link_libraries(grow_destin /home/your_hostnamedestin/Destin/DavisDestin/libdestinalt.so)
 ```
 Replace `your_hostname` to your own machine's username, then the building should be fine.
