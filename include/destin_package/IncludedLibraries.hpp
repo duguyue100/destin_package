@@ -8,7 +8,6 @@
 #ifndef INCLUDEDLIBRARIES_HPP_
 #define INCLUDEDLIBRARIES_HPP_
 
-
 // ROS LIBRARY
 #include "ros/ros.h"
 #include "std_msgs/String.h"
@@ -30,8 +29,16 @@
 
 // PCL LIBRARY
 
+// DeSTIN LIBRARY
+
+#include "DestinNetworkAlt.h"
+#include "Transporter.h"
+#include "unit_test.h"
+#include "BeliefExporter.h"
+
 // STANDARD LIBRARY
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <cstdio>
 #include <cstdlib>
@@ -39,7 +46,5 @@
 // NAMING SPACE
 using namespace std;
 using namespace cv;
-
-
 
 #endif /* INCLUDEDLIBRARIES_HPP_ */
