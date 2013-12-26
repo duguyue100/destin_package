@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/arlmaster/ros_workspace/destin_package/build/devel/setup.sh

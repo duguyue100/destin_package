@@ -33,4 +33,4 @@ rosbuild_add_executable(grow_destin src/grow_destin.cpp)
 include_directories(/home/arlmaster/destin/Destin/Common)
 include_directories(/home/arlmaster/destin/Destin/DavisDestin/include)
 target_link_libraries(grow_destin /home/arlmaster/destin/Destin/Common/libcommon.so)
-target_link_libraries(grow_destin /home/arlmaster/destin/Destin/DavisDestin/libdestinalt.so)
+target_link_libraries(grow_destin /home/arlmaster/destin/Destin/DavisDestin/libdestinalt.so);
