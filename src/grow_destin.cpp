@@ -225,9 +225,12 @@ void growDestinCallBack(const sensor_msgs::ImageConstPtr& msg)
 int main(int argc, char ** argv)
 {
   noDestin = 0;
+  selected_destin = -1;
   counter = 0;
   testing_counter = 0;
   testing_state = TESTING_STATE_OFF;
+  training_state= TRAINING_STATE_2;
+
   saved_frame.clear();
 
   ros::init(argc, argv, "grow_destin");

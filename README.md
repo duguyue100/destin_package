@@ -24,7 +24,9 @@ Current Nodes:
 + Growing DeSTIN network [FIRST VERSION COMPLETED, HAVEN'T TESTED]
 + Add condition to deal with initial situation [DONE, HAVEN'T TESTED]
 + Add condition to deal with when the selected DeSTIN network is updated (now everytime will create new DeSTIN network) [DONE, HAVEN'T TESTED]
++ Add some messages to control the flow
 + Add a pause
++ Add a full log when the program is crushed so the program can be recovered. (and some functions to utilize this)
 + Testing Growing DeSTIN network with slow moving speed
 + Memory monitoring
 + Test if the signal transmit is working well; if not, find out a way to control the speed.
