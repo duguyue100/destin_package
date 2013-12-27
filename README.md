@@ -29,7 +29,8 @@ Current Nodes:
 + Add condition to deal with when the selected DeSTIN network is updated (now everytime will create new DeSTIN network) [DONE]
 + Add some messages to control the flow [DONE]
 + Add a pause [DONE]
-+ The numbering of extracted features and DeSTIN network is no same, should be fixed
++ The numbering of extracted features and DeSTIN network is not same, should be fixed [NOT SO SURE, NEED A CLOSER LOOK]
++ Change a distance measurement method by using Gaussian-like distribution.
 + Add a full log when the program is crushed so the program can be recovered. (and some functions to utilize this)
 + Testing Growing DeSTIN network with slow moving speed [DONE]
 + Memory monitoring
