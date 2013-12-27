@@ -44,6 +44,8 @@
 #include <cstdlib>
 #include <cmath>
 #include <cfloat>
+#include <stdexcept>
+
 
 // NAMING SPACE
 using namespace std;

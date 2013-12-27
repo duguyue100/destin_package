@@ -12,8 +12,8 @@
 
 // Constant
 const int IMAGE_SIZE = 256;
-const int FRAME_COUNT = 1000;
-const int TESTING_FRAME_COUNT = 400;
+const int FRAME_COUNT = 1500;
+const int TESTING_FRAME_COUNT = 600;
 const int TRAINING_STATE_1 = 1;
 const int TRAINING_STATE_2 = 2;
 const int TRAINING_STATE_3 = 3;
@@ -32,7 +32,6 @@ int noDestin;
 int training_state;
 int testing_state;
 int selected_destin;
-float * testingFeature;
 vector<cv::Mat> saved_frame;
 cv::Mat mainFrame;
 ifstream fin;
@@ -100,9 +99,7 @@ int main(int argc, char ** argv)
 
   network = new DestinNetworkAlt(siw, nLayers, centroid_counts, isUniform);
 
-  cout << "[MESSAGE] New DeSTIN network is generated" << endl;
-
-  while (true)
+  while (ros::ok())
   {
     ros::spinOnce();
 
@@ -128,39 +125,75 @@ int main(int argc, char ** argv)
 
       network->save((char *)destin_name.c_str());
 
-      cout << "[MESSAGE] DeSTIN network " << noDestin << " is saved" << endl;
-
-      // disable training
-
-      //    for (int i = 0; i < nLayers; i++)
-      //      network->setLayerIsTraining(i, false);
-      //
-      //    network->clearBeliefs();
-
-      // extract features
-
-      //    int savedImageLength = saved_frame.size();
-      //
-      //    for (int i = 0; i < savedImageLength; i++)
-      //    {
-      //      float * float_image = callImage(saved_frame[i], IMAGE_SIZE);
-      //      network->doDestin(float_image);
-      //    }
+      if (selected_destin == -1)
+        cout << "[MESSAGE] DeSTIN network " << noDestin << " is saved" << endl;
+      else
+        cout << "[MESSAGE] DeSTIN network " << selected_destin << " is saved" << endl;
 
       if (selected_destin == -1)
+      {
         featureExtractor->writeBeliefToMat(SAVED_DESTIN_FEATURES);
+        cout << "[MESSAGE] Feature of DeSTIN network " << noDestin << " is extracted" << endl;
+        noDestin++;
+      }
+      else
+      {
+        // update features
+        fin.open(SAVED_DESTIN_FEATURES.c_str());
+
+        int outputSize = featureExtractor->getOutputSize();
+        vector<float *> saved_feature;
+        for (int i = 0; i < noDestin; i++)
+        {
+          float * temp = new float[outputSize];
+
+          for (int j = 0; j < outputSize; j++)
+            fin >> temp[j];
+
+          saved_feature.push_back(temp);
+        }
+
+        fin.close();
+
+        fout.open(SAVED_DESTIN_FEATURES.c_str(), ofstream::out | ofstream::trunc);
+        fout.close();
+
+        cout << "[MESSAGE] The contents of the features are refreshed." << endl;
+
+        FILE *filePtr;
+
+        int size=featureExtractor->getOutputSize();
+        filePtr = fopen(SAVED_DESTIN_FEATURES.c_str(), "a+");
+        for (int i = 0; i < noDestin; i++)
+        {
+          for (int j = 0; j < size; j++)
+            fprintf(filePtr, "%.9f\t", saved_feature.at(i)[j]);
+
+          fprintf(filePtr, "\n");
+        }
+        fclose(filePtr);
+
+        featureExtractor->writeBeliefToMat(SAVED_DESTIN_FEATURES);
+
+        filePtr = fopen(SAVED_DESTIN_FEATURES.c_str(), "a+");
+        for (int i = noDestin + 1; i < saved_feature.size(); i++)
+        {
+          for (int j = 0; j < size; j++)
+            fprintf(filePtr, "%.9f\t", saved_feature.at(i)[j]);
+
+          fprintf(filePtr, "\n");
+        }
+        fclose(filePtr);
+      }
 
       for (int i = 0; i < nLayers; i++)
         network->setLayerIsTraining(i, false);
 
-      network->clearBeliefs();
+      //network->clearBeliefs();
 
-      cout << "[MESSAGE] Feature of DeSTIN network " << noDestin << " is extracted" << endl;
       // clear DeSTIN
 
       //saved_frame.clear();
-      if (selected_destin == -1)
-        noDestin++;
       testing_state = TESTING_STATE_ON;
     }
     else if (testing_counter <= 200 && testing_state == TESTING_STATE_ON)
@@ -182,8 +215,6 @@ int main(int argc, char ** argv)
       {
         testing_state = TESTING_STATE_OFF;
         training_state = TRAINING_STATE_1;
-        //BeliefExporter * featureExtractor = new BeliefExporter(*network, 5);
-        //float * testingFeature = featureExtractor->getBeliefs();
       }
     }
     else if (counter < FRAME_COUNT && testing_state == TESTING_STATE_OFF)
