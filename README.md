@@ -17,17 +17,21 @@ Current Nodes:
   - The linking problem of DeSTIN is sloved.
   - The basic structure is established.
   - 2 collection of libraries are added.
++ 2012-12-27
+  - First roughly working version is updated.
+  - Some bugs are fixed
 
 ### Development Plan
 
 + Create a set of utility functions [DONE, STILL IMPROVING]
-+ Growing DeSTIN network [FIRST VERSION COMPLETED, HAVEN'T TESTED]
-+ Add condition to deal with initial situation [DONE, HAVEN'T TESTED]
-+ Add condition to deal with when the selected DeSTIN network is updated (now everytime will create new DeSTIN network) [DONE, HAVEN'T TESTED]
-+ Add some messages to control the flow
-+ Add a pause
++ Growing DeSTIN network [FIRST VERSION COMPLETED, TESTED]
++ Add condition to deal with initial situation [DONE]
++ Add condition to deal with when the selected DeSTIN network is updated (now everytime will create new DeSTIN network) [DONE]
++ Add some messages to control the flow [DONE]
++ Add a pause [DONE]
++ The numbering of extracted features and DeSTIN network is no same, should be fixed
 + Add a full log when the program is crushed so the program can be recovered. (and some functions to utilize this)
-+ Testing Growing DeSTIN network with slow moving speed
++ Testing Growing DeSTIN network with slow moving speed [DONE]
 + Memory monitoring
 + Test if the signal transmit is working well; if not, find out a way to control the speed.
 + Make libraries linking more flexible
@@ -51,6 +55,8 @@ Replace `your_hostname` to your own machine's username, then the building should
   - Then the robot close and save the current configuration and then turn to a new scene
   - If the new scene is similar to saved DeSTIN networks enough, then will select a best fit network to update.
   - Otherwise will create a new DeSTIN network.
++ In ROS, the `ros::spinOnce()` function is useful when you want to drag all the data from subscribed topic to your main program. And in this package, we use a global variable to copy out the data and then process it in a endless loop in main.
++ When `network->load(filename)` is executed, the layers of training are automatically closed. You need to open them manually. [IMPROTANT]
 
 ## Contact
 
