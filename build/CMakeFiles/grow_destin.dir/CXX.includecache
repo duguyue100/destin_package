@@ -57,6 +57,8 @@ cstdlib
 -
 cmath
 -
+cfloat
+-
 
 ../include/destin_package/UtilityFunctions.hpp
 destin_package/IncludedLibraries.hpp

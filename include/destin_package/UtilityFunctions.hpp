@@ -15,9 +15,11 @@ double calculateDistance(int featureDimension, float * selected_destin, float * 
   double distance=0;
 
   for (int i=0;i<featureDimension;i++)
-    distance+=(selected_destin-testing_feature)*(selected_destin-testing_feature);
+  {
+    distance+=(selected_destin[i]-testing_feature[i])*(selected_destin[i]-testing_feature[i]);
+  }
 
-  distance=sqrt(distance);
+  distance=sqrt(distance)*10;
 
   return distance;
 }
@@ -49,7 +51,7 @@ void convert(cv::Mat& in, float * out)
 int findMostSimilarDeSTINNetwork(int noDestin, int featureDimension, vector<float *> saved_feature, float * testing_feature)
 {
   int result=-1;
-  double distance=99999999;
+  double distance=DBL_MAX;
   for (int i=0;i<noDestin;i++)
   {
     double d=calculateDistance(featureDimension, saved_feature[i], testing_feature);
