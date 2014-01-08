@@ -8,6 +8,7 @@ This project is aiming to create a easy-to-use package for using DeSTIN in ROS w
 Current Nodes:
 
 + `grow_destin`: planning to create a growing DeSTIN with ROS.
++ `destin_scene_collector`: a simple DeSTIN network collector for different scene.
 
 ## Updates and Development Plan
 
