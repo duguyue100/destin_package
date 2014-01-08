@@ -215,6 +215,19 @@ clean_test_results/fast:
 .PHONY : clean_test_results/fast
 
 #=============================================================================
+# Target rules for targets named destin_scene_collector
+
+# Build rule for target.
+destin_scene_collector: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 destin_scene_collector
+.PHONY : destin_scene_collector
+
+# fast build rule for target.
+destin_scene_collector/fast:
+	$(MAKE) -f CMakeFiles/destin_scene_collector.dir/build.make CMakeFiles/destin_scene_collector.dir/build
+.PHONY : destin_scene_collector/fast
+
+#=============================================================================
 # Target rules for targets named doxygen
 
 # Build rule for target.
@@ -422,6 +435,30 @@ gtest_main/fast:
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+src/destin_scene_collector.o: src/destin_scene_collector.cpp.o
+.PHONY : src/destin_scene_collector.o
+
+# target to build an object file
+src/destin_scene_collector.cpp.o:
+	$(MAKE) -f CMakeFiles/destin_scene_collector.dir/build.make CMakeFiles/destin_scene_collector.dir/src/destin_scene_collector.cpp.o
+.PHONY : src/destin_scene_collector.cpp.o
+
+src/destin_scene_collector.i: src/destin_scene_collector.cpp.i
+.PHONY : src/destin_scene_collector.i
+
+# target to preprocess a source file
+src/destin_scene_collector.cpp.i:
+	$(MAKE) -f CMakeFiles/destin_scene_collector.dir/build.make CMakeFiles/destin_scene_collector.dir/src/destin_scene_collector.cpp.i
+.PHONY : src/destin_scene_collector.cpp.i
+
+src/destin_scene_collector.s: src/destin_scene_collector.cpp.s
+.PHONY : src/destin_scene_collector.s
+
+# target to generate assembly for a file
+src/destin_scene_collector.cpp.s:
+	$(MAKE) -f CMakeFiles/destin_scene_collector.dir/build.make CMakeFiles/destin_scene_collector.dir/src/destin_scene_collector.cpp.s
+.PHONY : src/destin_scene_collector.cpp.s
+
 src/grow_destin.o: src/grow_destin.cpp.o
 .PHONY : src/grow_destin.o
 
@@ -458,6 +495,7 @@ help:
 	@echo "... ROSBUILD_gensrv_lisp"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... clean_test_results"
+	@echo "... destin_scene_collector"
 	@echo "... doxygen"
 	@echo "... edit_cache"
 	@echo "... grow_destin"
@@ -480,6 +518,9 @@ help:
 	@echo "... tests"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... src/destin_scene_collector.o"
+	@echo "... src/destin_scene_collector.i"
+	@echo "... src/destin_scene_collector.s"
 	@echo "... src/grow_destin.o"
 	@echo "... src/grow_destin.i"
 	@echo "... src/grow_destin.s"

@@ -106,4 +106,11 @@ float * callImage(cv::Mat& image, int IMAGE_SIZE)
   return float_image;
 }
 
+void callImage(cv::Mat & image, int IMAGE_SIZE, float * float_image)
+{
+  convert(image, float_image);
+
+  testNan(float_image, IMAGE_SIZE * IMAGE_SIZE);
+}
+
 #endif /* UTILITYFUNCTIONS_HPP_ */

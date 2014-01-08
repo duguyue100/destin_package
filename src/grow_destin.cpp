@@ -138,7 +138,7 @@ int main(int argc, char ** argv)
       }
       else
       {
-        // update features
+      // update features
         fin.open(SAVED_DESTIN_FEATURES.c_str());
 
         int outputSize = featureExtractor->getOutputSize();

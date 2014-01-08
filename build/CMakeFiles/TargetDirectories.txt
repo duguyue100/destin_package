@@ -4,6 +4,7 @@
 /home/arlmaster/ros_workspace/destin_package/build/CMakeFiles/ROSBUILD_gensrv_lisp.dir
 /home/arlmaster/ros_workspace/destin_package/build/CMakeFiles/_catkin_empty_exported_target.dir
 /home/arlmaster/ros_workspace/destin_package/build/CMakeFiles/clean_test_results.dir
+/home/arlmaster/ros_workspace/destin_package/build/CMakeFiles/destin_scene_collector.dir
 /home/arlmaster/ros_workspace/destin_package/build/CMakeFiles/doxygen.dir
 /home/arlmaster/ros_workspace/destin_package/build/CMakeFiles/grow_destin.dir
 /home/arlmaster/ros_workspace/destin_package/build/gtest/CMakeFiles/gtest.dir
